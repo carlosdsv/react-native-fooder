@@ -8,10 +8,10 @@ const SearchScreen = () => {
   const [term, setTerm] = useState('');
   const [searchApi, restaurants, errorMessage] = useRestaurants();
 
-  const filterRestaurantsByPrice = (price) => {
+  const filterRestaurantsByPrice = (priceDolar, priceEuro) => {
     // price === '$' || '$$$' || '$$$'
     const res = restaurants.filter((restaurant) => {
-      return restaurant.price === price;
+      return restaurant.price === priceDolar || restaurant.price === priceEuro;
     });
     return res;
   };
@@ -25,15 +25,15 @@ const SearchScreen = () => {
       {errorMessage ? <Text>{errorMessage}</Text> : null}
       <Text>We have found {restaurants.length} results</Text>
       <RestautantsList
-        restaurantsByPrice={filterRestaurantsByPrice('€')}
+        restaurantsByPrice={filterRestaurantsByPrice('$', '€')}
         title="Cost Effective"
       />
       <RestautantsList
-        restaurantsByPrice={filterRestaurantsByPrice('€€')}
+        restaurantsByPrice={filterRestaurantsByPrice('$$', '€€')}
         title="Bit Pricier"
       />
       <RestautantsList
-        restaurantsByPrice={filterRestaurantsByPrice('€€€')}
+        restaurantsByPrice={filterRestaurantsByPrice('$$$', '€€€')}
         title="Big Spender"
       />
     </View>
