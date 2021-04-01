@@ -1,27 +1,33 @@
 import React from 'react';
 import { View, Text, StyleSheet, FlatList } from 'react-native';
+import RestaurantDetail from './RestaurantDetail';
 
 const RestaurantsList = ({ title, restaurantsByPrice }) => {
   return (
-    <View>
+    <View style={styles.container}>
       <Text style={styles.title}>{title}</Text>
       <FlatList
         horizontal
+        showsHorizontalScrollIndicator={false}
         data={restaurantsByPrice}
         keyExtractor={(data) => data.id}
         renderItem={({ item }) => {
-          return <Text>{item.name}</Text>;
+          return <RestaurantDetail restaurant={item} />;
         }}
       />
-      <Text>Results: {restaurantsByPrice.length}</Text>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
+  container: {
+    marginBottom: 10,
+  },
   title: {
     fontSize: 18,
     fontWeight: 'bold',
+    marginLeft: 15,
+    marginBottom: 5,
   },
 });
 

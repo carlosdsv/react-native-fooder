@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import SearchBar from '../components/SearchBar';
 import useRestaurants from '../hooks/useRestaurants';
 import RestautantsList from '../components/RestaurantsList';
@@ -16,30 +16,39 @@ const SearchScreen = () => {
     return res;
   };
   return (
-    <View>
+    <>
       <SearchBar
         term={term}
         onTermChange={setTerm}
         onTermSubmit={() => searchApi(term)}
       />
       {errorMessage ? <Text>{errorMessage}</Text> : null}
-      <Text>We have found {restaurants.length} results</Text>
-      <RestautantsList
-        restaurantsByPrice={filterRestaurantsByPrice('$', '€')}
-        title="Cost Effective"
-      />
-      <RestautantsList
-        restaurantsByPrice={filterRestaurantsByPrice('$$', '€€')}
-        title="Bit Pricier"
-      />
-      <RestautantsList
-        restaurantsByPrice={filterRestaurantsByPrice('$$$', '€€€')}
-        title="Big Spender"
-      />
-    </View>
+      <ScrollView>
+        <RestautantsList
+          restaurantsByPrice={filterRestaurantsByPrice('$', '€')}
+          title="Cost Effective"
+        />
+        <RestautantsList
+          restaurantsByPrice={filterRestaurantsByPrice('$$', '€€')}
+          title="Bit Pricier"
+        />
+        <RestautantsList
+          restaurantsByPrice={filterRestaurantsByPrice('$$$', '€€€')}
+          title="Big Spender"
+        />
+        <RestautantsList
+          restaurantsByPrice={filterRestaurantsByPrice(undefined)}
+          title="Undefined 0_o"
+        />
+      </ScrollView>
+    </>
   );
 };
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+});
 
 export default SearchScreen;
